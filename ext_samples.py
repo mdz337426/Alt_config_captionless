@@ -35,7 +35,6 @@ def crop_image(image):
         # Save cropped image
         cropped_pil = Image.fromarray(cropped_image)
         buffered = BytesIO()
-        cropped_pil.save(buffered, format="PNG")  # You can use "JPEG" if needed
+        cropped_pil.save(buffered, format="JPG")  # You can use "JPEG" if needed
         base64_string = base64.b64encode(buffered.getvalue()).decode()
         return base64_string
-

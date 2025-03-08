@@ -33,11 +33,8 @@ def check_uploaded():
 
 
 def pdf_images_to_excel(pdf_path, excel_path, completed_pages, row_number, sample_file):
-    #sample = ext_examples.extract_alt_text_examples(sample_file,num_examples=5)
     samples = ext_samples.extract_alt_text_examples(sample_file)
-    # Convert PDF pages to images
     images = convert_from_path(pdf_path, poppler_Path)
-    # Create a new Excel workbook and sheet
     if os.path.exists(excel_path):
         wb = load_workbook(excel_path)
     else:
@@ -56,23 +53,11 @@ def pdf_images_to_excel(pdf_path, excel_path, completed_pages, row_number, sampl
         for j, image in enumerate(images):
             if j<completed_pages:
                 continue 
-            # Convert image to bytes
-            img_buffer = io.BytesIO()
-            image.save(img_buffer, format="PNG")
-            img_buffer.seek(0)
-
-            # Convert to Base64
-            img_base64 = base64.b64encode(img_buffer.read()).decode("utf-8") 
-
             img = ext_samples.crop_image(image)
             alt_text = app.generate_alt_text(samples, img, prompt) 
-
             data = alt_text.split('\n\n')
             short_text = (data[0].strip()).replace("Short alt text:", "")
             long_text = (data[1].strip()).replace("Long alt text:", "")
-
-            print(short_text, "\n", long_text)
-              
             ws[f'A{i+2}'] = f"Page no. {j+1}"
             ws[f'G{i+2}'] = short_text
             ws[f'I{i+2}'] = long_text
@@ -85,14 +70,12 @@ def pdf_images_to_excel(pdf_path, excel_path, completed_pages, row_number, sampl
         print(f"Some error occured")
         print(f"Excel saved at: {excel_path}")
 
-
-     
+  
 def main():
     completed_pages = int(input("Enter the number of completed pages: "))
     sapmle_path = "sample.xlsx"
     row_number = int(input("Enter the number of rows completed: "))
     pdf_images_to_excel("input.pdf", "output.xlsx", completed_pages, row_number, sapmle_path)
-
 
 if __name__ == "__main__":
     main()
