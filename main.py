@@ -36,7 +36,7 @@ def pdf_images_to_excel(pdf_path, excel_path, completed_pages, row_number, sampl
     #sample = ext_examples.extract_alt_text_examples(sample_file,num_examples=5)
     samples = ext_samples.extract_alt_text_examples(sample_file)
     # Convert PDF pages to images
-    images = convert_from_path(pdf_path)
+    images = convert_from_path(pdf_path, poppler_Path)
     # Create a new Excel workbook and sheet
     if os.path.exists(excel_path):
         wb = load_workbook(excel_path)
