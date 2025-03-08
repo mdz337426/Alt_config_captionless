@@ -1,0 +1,7 @@
+input.pdf
+output.xlsx
+sample.xlsx
+/outputs
+/venv
+/__pycache__
+extrct_img.py 
