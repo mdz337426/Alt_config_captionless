@@ -26,6 +26,7 @@ def generate_alt_text(sample, image_base64, prompt):
                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}},
             ]}
         ],
+        "temperature":0.2,
         "max_tokens": 400
     }
 
